@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WepAPI", "WepAPI\WepAPI.csproj", "{4C3C147D-060F-4506-BC6D-617216E81C87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library-Wep", "Library-Wep\Library-Wep.csproj", "{CA5EB809-EC3B-46ED-85E4-8990E8A360C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4C3C147D-060F-4506-BC6D-617216E81C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C3C147D-060F-4506-BC6D-617216E81C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C3C147D-060F-4506-BC6D-617216E81C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA5EB809-EC3B-46ED-85E4-8990E8A360C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA5EB809-EC3B-46ED-85E4-8990E8A360C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA5EB809-EC3B-46ED-85E4-8990E8A360C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA5EB809-EC3B-46ED-85E4-8990E8A360C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
