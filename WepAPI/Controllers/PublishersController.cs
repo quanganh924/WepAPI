@@ -7,7 +7,7 @@ namespace WepAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PublishersController : ControllerBase
     {
        
@@ -17,8 +17,9 @@ namespace WepAPI.Controllers
             {
                 _publisherRepository = publisherRepository;
             }
-
+            
             [HttpGet("get-all")]
+            [AllowAnonymous]
             public IActionResult GetAll()
             {
                 return Ok(_publisherRepository.GetAllPublishers());

@@ -13,7 +13,7 @@ namespace WepAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class BookController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
@@ -26,7 +26,7 @@ namespace WepAPI.Controllers
             _logger = logger;
         }
         [HttpGet("get-all-books")]
-        [Authorize(Roles = "Read")]
+        //[Authorize(Roles = "Read")]
         public IActionResult GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100) 
         {
             _logger.LogInformation("GetAll Book Action method was invoked");
@@ -45,8 +45,8 @@ namespace WepAPI.Controllers
             var bookWithIdDTO = _bookRepository.GetBookById(id); return Ok(bookWithIdDTO);
 
         }
-        [HttpPost("and-book")]
-        [Authorize(Roles = "Write")]
+        [HttpPost("add-book")]
+        //[Authorize(Roles = "Write")]
         [ValidateModel]
         public IActionResult AddBook([FromBody] addBookRequestDTO addBookRequestDTO)
         {

@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<Library_Wep.Models.DTO.BookDTO>
+@{
+    ViewData["Title"] = "Books List";
+}
 <h2>List all books</h2>
 <a class="btn btn-primary" asp-controller="Books" asp-action="addBook">Add new book</a>
 <table class="table">
@@ -36,22 +39,22 @@
             <td><a asp-area="" asp-controller="Books" asp-action="delBook" asp-route-id="@item.Id">Delete</a></td>
         </tr>
     }
-    <form asp-controller="Books" asp-action="Index" method="GET">
-        <label>Tìm kiếm sách:</label>
-        <select name="filterOn" id="filterOn">
-            <option value="title">Tiêu đề</option>
-            <option value="author">Tác giả</option>
-            <option value="publisher">Nhà xuất bản</option>
-        </select>
-        <input type="text" name="filterQuery" />
-        <label>Sắp xếp:</label>
-        <select name="sortBy" id="sortBy">
-            <option value="title">Tiêu đề</option>
-            <option value="rate">Đánh giá</option>
-        </select>
-        <label>Tăng dần:</label><input type="radio" name="isAscending" value="True" />
-        <label>Giảm dần:</label><input type="radio" name="isAscending" value="False" />
-        <input type="submit" value="Search" />
-    </form>
-</table>
 
+</table>
+<form asp-controller="Books" asp-action="Index" method="GET">
+    <label>Tìm kiếm sách:</label>
+    <select name="filterOn" id="filterOn">
+        <option value="title">Tiêu đề</option>
+        <option value="author">Tác giả</option>
+        <option value="publisher">Nhà xuất bản</option>
+    </select>
+    <input type="text" name="filterQuery" />
+    <label>Sắp xếp:</label>
+    <select name="sortBy" id="sortBy">
+        <option value="title">Tiêu đề</option>
+        <option value="rate">Đánh giá</option>
+    </select>
+    <label>Tăng dần:</label><input type="radio" name="isAscending" value="True" />
+    <label>Giảm dần:</label><input type="radio" name="isAscending" value="False" />
+    <input type="submit" value="Search" />
+</form>

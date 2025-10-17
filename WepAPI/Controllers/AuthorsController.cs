@@ -9,7 +9,7 @@ namespace WepAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
@@ -20,6 +20,7 @@ namespace WepAPI.Controllers
             _authorRepository = authorRepository;
         }
         [HttpGet("get-all-author")]
+        [AllowAnonymous]
         public IActionResult GetAll()
         {
 

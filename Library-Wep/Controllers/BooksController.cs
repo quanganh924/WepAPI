@@ -20,7 +20,8 @@ namespace Library_Wep.Controllers
             try
             {
                 var client = _httpClientFactory.CreateClient();
-                var httpResponseMess = await client.GetAsync("https://localhost:7192/api/Books/get-allbooks?filteron="+filterOn+"&filterQuery="+filterQuery+"&sortBy="+sortBy+"&isAscending="+isAscending);
+                var httpResponseMess = await client.GetAsync("https://localhost:7280/api/Book/get-all-books?filterOn="+
+                    filterOn+"&filterQuery="+filterQuery+"&sortBy="+sortBy+"&isAscending="+isAscending);
                 httpResponseMess.EnsureSuccessStatusCode();
                 response.AddRange(await httpResponseMess.Content.ReadFromJsonAsync<IEnumerable<BookDTO>>());
 
@@ -31,6 +32,37 @@ namespace Library_Wep.Controllers
             }
             return View(response);
         }
+        [HttpGet]
+        public async Task<IActionResult> addBook()
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            try
+            {
+                var responsePublisher = await client.GetAsync("https://localhost:7280/api/Publisher/get-all-publisher");
+                var responseAuthor = await client.GetAsync("https://localhost:7280/api/Author/get-all-author");
+
+                var publishers = new List<publisherDTO>();
+                var authors = new List<authorDTO>();
+
+                if (responsePublisher.IsSuccessStatusCode)
+                    publishers = await responsePublisher.Content.ReadFromJsonAsync<List<publisherDTO>>();
+
+                if (responseAuthor.IsSuccessStatusCode)
+                    authors = await responseAuthor.Content.ReadFromJsonAsync<List<authorDTO>>();
+
+                ViewBag.listPublisher = publishers;
+                ViewBag.listAuthor = authors;
+            }
+            catch
+            {
+                ViewBag.listPublisher = new List<publisherDTO>();
+                ViewBag.listAuthor = new List<authorDTO>();
+            }
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> addBook(addBookDTO AddBookDTO)
         {
@@ -40,7 +72,7 @@ namespace Library_Wep.Controllers
                 var httpRequestMess = new HttpRequestMessage()
                 {
                     Method = HttpMethod.Post,
-                    RequestUri = new Uri("https://localhost:7192/api/Books/add-book"),
+                    RequestUri = new Uri("https://localhost:7280/api/Book/add-book"),
                     Content = new StringContent(JsonSerializer.Serialize(AddBookDTO), Encoding.UTF8, MediaTypeNames.Application.Json)
                 };
                 //Console.WriteLine(JsonSerializer.Serialize(addBookDTO));
@@ -65,7 +97,7 @@ namespace Library_Wep.Controllers
             {
                 
                 var client = _httpClientFactory.CreateClient();
-                var httpResponseMessage = await client.GetAsync("https://localhost:7192/api/Books/get-book-by-id/" + id);
+                var httpResponseMessage = await client.GetAsync("https://localhost:7280/api/Book/get-book-by-id/" + id);
                 httpResponseMessage.EnsureSuccessStatusCode();
                 var stringResponseBody = await httpResponseMessage.Content.ReadAsStringAsync();
                 response = await httpResponseMessage.Content.ReadFromJsonAsync<BookDTO>();
@@ -84,21 +116,21 @@ namespace Library_Wep.Controllers
             var client = _httpClientFactory.CreateClient();
 
             // 1. Get Book by ID
-            var httpResponseMessage = await client.GetAsync("https://localhost:7192/api/Books/get-book-by-id/" + id);
+            var httpResponseMessage = await client.GetAsync("https://localhost:7280/api/Book/get-book-by-id/" + id);
             httpResponseMessage.EnsureSuccessStatusCode();
             responseBook = await httpResponseMessage.Content.ReadFromJsonAsync<BookDTO>();
             ViewBag.Book = responseBook;
 
             // 2. Get All Authors
             List<authorDTO> responseAu = new List<authorDTO>();
-            var httpResponseMessageAu = await client.GetAsync("https://localhost:7192/api/Authors/get-all-author");
+            var httpResponseMessageAu = await client.GetAsync("https://localhost:7280/api/Authors/get-all-author");
             httpResponseMessageAu.EnsureSuccessStatusCode();
             responseAu.AddRange(await httpResponseMessageAu.Content.ReadFromJsonAsync<IEnumerable<authorDTO>>());
             ViewBag.ListAuthor = responseAu;
 
             // 3. Get All Publishers
             List<publisherDTO> responsePu = new List<publisherDTO>();
-            var httpResponseMessagePu = await client.GetAsync("https://localhost:7192/api/Publishers/get-all-publisher");
+            var httpResponseMessagePu = await client.GetAsync("https://localhost:7280/api/Publishers/get-all-publisher");
             httpResponseMessagePu.EnsureSuccessStatusCode();
             responsePu.AddRange(await httpResponseMessagePu.Content.ReadFromJsonAsync<IEnumerable<publisherDTO>>());
             ViewBag.ListPublisher = responsePu;
@@ -115,7 +147,7 @@ namespace Library_Wep.Controllers
                 var httpRequestMess = new HttpRequestMessage()
                 {
                     Method = HttpMethod.Put,
-                    RequestUri = new Uri("https://localhost:7192/api/Books/update-book-by-id/" + id),
+                    RequestUri = new Uri("https://localhost:7280/api/Book/update-book-by-id/" + id),
                     Content = new StringContent(JsonSerializer.Serialize(bookDTO), Encoding.UTF8, MediaTypeNames.Application.Json)
                 };
 
@@ -141,7 +173,7 @@ namespace Library_Wep.Controllers
             {
                 // lấy dữ liệu books from API
                 var client = _httpClientFactory.CreateClient();
-                var httpResponseMessage = await client.DeleteAsync("https://localhost:7192/api/Books/delete-book-by-"
+                var httpResponseMessage = await client.DeleteAsync("https://localhost:7280/api/Book/delete-book-by-"
                     + "id/" + id);
                 httpResponseMessage.EnsureSuccessStatusCode();
                 return RedirectToAction("Index", "Books");
@@ -151,7 +183,7 @@ namespace Library_Wep.Controllers
                 ViewBag.Error = ex.Message;
             }
 
-            return View("Index");
+            return View("Index  ");
         }
     } 
        
